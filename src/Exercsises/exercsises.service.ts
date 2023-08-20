@@ -15,7 +15,7 @@ export class ExercsisesService {
     try {
       return await this.repo.find();
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 
@@ -29,7 +29,7 @@ export class ExercsisesService {
       }
       return exercise;
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 
@@ -39,7 +39,7 @@ export class ExercsisesService {
 
       return await this.repo.save(exercise);
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 
@@ -55,7 +55,7 @@ export class ExercsisesService {
       Object.assign(exercsise, Body);
       return this.repo.save(exercsise);
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 
@@ -69,7 +69,7 @@ export class ExercsisesService {
       this.repo.remove(exercsise);
       return true;
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 }

@@ -6,13 +6,17 @@ import {
   Param,
   Post,
   Put,
+  UseInterceptors,
 } from '@nestjs/common';
 import { Injectable } from '@nestjs/common';
 import { ExercsisesService } from './exercsises.service';
 import { updateExercsiseDto } from './DTO/update.exer.dto';
 import { createExercsiseDto } from './DTO/create.exerc.dto';
+import { serialize } from './interceptors/data.hide.interceptor';
+import { getExercsiseDto } from './DTO/get.exerc.dto';
 
 @Controller('/exercsise')
+@serialize(getExercsiseDto)
 @Injectable()
 export class ExercsisesController {
   constructor(private exerciseService: ExercsisesService) {}
