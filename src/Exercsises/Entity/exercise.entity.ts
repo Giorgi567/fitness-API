@@ -1,18 +1,22 @@
-import { IsString, IsNumber } from 'class-validator';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
+@Entity()
 export class ExerciseEntity {
-  @IsNumber()
+  @PrimaryGeneratedColumn()
   id: number;
 
-  @IsString()
-  title: string;
+  @Column()
+  Title: string;
 
-  @IsString()
-  description: string;
+  @Column()
+  Description: string;
 
-  @IsNumber()
+  @Column()
+  Form: string;
+
+  @Column()
   Sets: number;
 
-  @IsNumber()
+  @Column()
   Reps: number;
 }
