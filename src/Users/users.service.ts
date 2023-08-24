@@ -22,6 +22,9 @@ export class UsersService {
     }
   }
 
+  async getUserByEmail(email: string) {
+    return await this.repo.findOne({ where: { email: email } });
+  }
   async createUser(Body: createUserDTO) {
     try {
       console.log(`in service`);
