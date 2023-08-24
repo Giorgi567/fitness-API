@@ -1,3 +1,4 @@
+import { UserEntity } from 'src/Users/Entity/users.entity';
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
@@ -19,4 +20,6 @@ export class ExerciseEntity {
 
   @Column()
   Reps: number;
+
+  // User: UserEntity;
 }

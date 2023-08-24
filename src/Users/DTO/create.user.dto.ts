@@ -1,12 +1,14 @@
-import { IsNumber, IsString, IsEmail } from 'class-validator';
+import {
+  IsNumber,
+  IsString,
+  IsEmail,
+  IsNotEmpty,
+  IsOptional,
+} from 'class-validator';
 import { GENDER } from '../enums/user.gender.enum';
 import { ROLE } from '../enums/user.role.enum';
-import { ExerciseEntity } from 'src/Exercsises/Entity/exercise.entity';
 
 export class createUserDTO {
-  @IsNumber()
-  id: number;
-
   @IsString()
   Username: string;
 
@@ -22,11 +24,12 @@ export class createUserDTO {
   @IsNumber()
   height: number;
 
+  @IsNotEmpty()
   gender: GENDER;
 
-  Role: ROLE;
-
-  workouts: ExerciseEntity[];
+  @IsString()
+  @IsOptional()
+  Role: ROLE = ROLE.USER;
 
   @IsString()
   password: string;

@@ -24,15 +24,19 @@ export class UsersService {
 
   async createUser(Body: createUserDTO) {
     try {
-      const user = await this.repo.create(Body);
-      this.repo.save(user);
+      console.log(`in service`);
+
+      const user = this.repo.create(Body);
+      console.log(user);
+
+      await this.repo.save(user);
       return user;
     } catch (error) {
       throw new Error(error);
     }
   }
 
-  async updateUser(id: number, Body: updateUserDTO) {
+  async updateUser(id: number, Body: Partial<updateUserDTO>) {
     try {
       const user = await this.repo.findOne({ where: { id: id } });
       if (!user) {

@@ -1,8 +1,6 @@
-import { Entity, Column } from 'typeorm';
-import { ROLE } from '../enums/user.role.enum';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 import { GENDER } from '../enums/user.gender.enum';
-import { ExerciseEntity } from 'src/Exercsises/Entity/exercise.entity';
-import { PrimaryGeneratedColumn } from 'typeorm';
+import { ROLE } from '../enums/user.role.enum';
 
 @Entity()
 export class UserEntity {
@@ -29,9 +27,6 @@ export class UserEntity {
 
   @Column()
   Role: ROLE;
-
-  @Column()
-  workouts: ExerciseEntity[];
 
   @Column()
   password: string;
