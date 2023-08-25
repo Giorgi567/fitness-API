@@ -13,7 +13,8 @@ import { createUserDTO } from './DTO/create.user.dto';
 import { updateUserDTO } from './DTO/update.user.dto';
 import { authService } from 'src/Users/Authentication/auth.service';
 import { singInDTO } from './DTO/signIn.user.dto';
-
+import { Session } from '@nestjs/common';
+import { UserEntity } from './Entity/users.entity';
 @Controller('users')
 @Injectable()
 export class UsersController {
@@ -21,15 +22,25 @@ export class UsersController {
     private userService: UsersService,
     private authService: authService,
   ) {}
+
   @Post('/signUp')
-  async signUp(@Body() Body: createUserDTO) {
-    return this.authService.signUp(Body);
+  async signUp(@Body() Body: createUserDTO, @Session() session: any) {
+    const user = await this.authService.signUp(Body);
+    if (user instanceof UserEntity) {
+      session.userId = user.id;
+    }
+    return user;
   }
 
   @Post('/signIn')
-  async signIn(@Body() Body: singInDTO) {
-    return this.authService.signIn(Body);
+  async signIn(@Body() Body: singInDTO, @Session() session: any) {
+    const user = await this.authService.signIn(Body);
+    if (user instanceof UserEntity) {
+      session.userId = user.id;
+    }
+    return user;
   }
+
   @Get()
   async getAllUsers() {
     return this.userService.getAllUsers();

@@ -12,22 +12,26 @@ export class authService {
   constructor(private userService: UsersService) {}
 
   async signUp(Body: createUserDTO) {
-    const user = this.userService.getUserByEmail(Body.email);
+    try {
+      const user = await this.userService.getUserByEmail(Body.email);
 
-    if (user) {
-      return new Error(`User with this email ${Body.email} aredy exists`);
+      if (user) {
+        return new Error(`User with this email ${Body.email} already exists`);
+      }
+
+      const password: string = Body.password;
+      const salt = randomBytes(20).toString('hex');
+      const hash = (await scrypt(password, salt, 32)) as Buffer;
+
+      const results = salt + '/' + hash.toString('hex');
+      Body.password = results;
+
+      const finalUser = await this.userService.createUser(Body);
+
+      return finalUser;
+    } catch (error) {
+      throw new Error(error);
     }
-
-    const password: string = Body.password;
-    const salt = randomBytes(20).toString('hex');
-    const hash = (await scrypt(password, salt, 32)) as Buffer;
-
-    const results = salt + '/' + hash.toString('hex');
-    Body.password = results;
-
-    const finalUser = this.userService.createUser(Body);
-
-    return finalUser;
   }
 
   async signIn(Body: singInDTO) {

@@ -32,8 +32,7 @@ export class UsersService {
       const user = this.repo.create(Body);
       console.log(user);
 
-      await this.repo.save(user);
-      return user;
+      return await this.repo.save(user);
     } catch (error) {
       throw new Error(error);
     }
