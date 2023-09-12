@@ -46,6 +46,8 @@ export class UsersController {
     return this.userService.getAllUsers();
   }
 
+  @Post()
+  async getCerateUSers(id: string) {}
   @Get('/:id')
   async getUser(@Param('id') id: string) {
     return this.userService.getUser(+id);

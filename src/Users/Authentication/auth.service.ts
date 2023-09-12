@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { createUserDTO } from 'src/Users/DTO/create.user.dto';
 import { randomBytes, scrypt as _scrypt } from 'crypto';
 import { promisify } from 'util';
-import { UsersService } from 'src/Users/users.service';
+import { UsersService } from '../users.service';
 import { singInDTO } from '../DTO/signIn.user.dto';
 import { NotFoundException } from '@nestjs/common';
 const scrypt = promisify(_scrypt);
@@ -16,7 +16,9 @@ export class authService {
       const user = await this.userService.getUserByEmail(Body.email);
 
       if (user) {
-        return new Error(`User with this email ${Body.email} already exists`);
+        return new BadRequestException(
+          `User with this email ${Body.email} already exists`,
+        );
       }
 
       const password: string = Body.password;
@@ -30,7 +32,8 @@ export class authService {
 
       return finalUser;
     } catch (error) {
-      throw new Error(error);
+      console.log('error::', error);
+      throw new BadRequestException(error);
     }
   }
 
